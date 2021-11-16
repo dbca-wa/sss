@@ -1,0 +1,32 @@
+<OGRVRTDataSource>
+    <OGRVRTUnionLayer name="{{layer}}">
+    {%- for slayer in sourcelayers %}
+        <OGRVRTLayer name="{{slayer.layer}}">
+            <SrcDataSource>{{slayer.datasource[0]}}</SrcDataSource>
+            <SrcLayer>{{slayer.layer}}</SrcLayer>
+            {%- if slayer.srs %}
+            <LayerSRS>{{slayer.srs}}</LayerSRS>
+            {%- endif %}
+            {%- if slayer.geometry_field %}
+            <GeometryField name="{{slayer.geometry_field.name}}" {%- if slayer.geometry_field.src %} field="{{slayer.geometry_field.src}}" {%- endif %}>
+            </GeometryField>
+            {%- endif %}
+            {%- if slayer.fields %}
+                {%- for field in slayer.fields %}
+            <Field name="{{field[0]}}" src="{{field[1]}}"  type="{{field[2]}}" {%- if field[3] and field[3] != "0" %} width="{{field[3]}}" {%- endif %} {%- if field[4] and field[4] != "0" %} precision="{{field[4]}}" {%- endif %}/>
+                {%- endfor %}
+            {%- endif %}
+        </OGRVRTLayer>
+    {%- endfor %}
+    {%- if geometry_field %}
+        <GeometryField name="{{geometry_field.name}}">
+            {%- if geometry_field.type %}
+            <GeometryType>{{geometry_field.type}}</GeometryType>
+            {%- endif %}
+        </GeometryField>
+        {%- endif %}
+    {%- if field_strategy %}
+        <FieldStrategy>{{field_strategy}}</FieldStrategy>
+    {%- endif %}
+    </OGRVRTUnionLayer>
+</OGRVRTDataSource>

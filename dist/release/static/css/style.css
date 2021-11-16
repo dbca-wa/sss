@@ -1,0 +1,600 @@
+/* full-height page for slippy map, thanks */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* mousehover info pane, hide for mobile */
+@media screen and (max-width: 40em) {
+    #info {
+        display: none;
+    }
+}
+
+#info {
+    position: absolute;
+    z-index: 2;
+    padding: 0.5em;
+    background-color: #424f5a;
+    max-width: 40%;
+    width: 100%;
+}
+
+#info .content {
+    max-height: 30vh;
+    overflow: auto;
+}
+
+#info .close-button {
+    display: none;
+}
+
+/* full-height the foundation off-canvas stuff also */
+
+.off-canvas-wrapper {
+    height: 100%;
+}
+
+.off-canvas-wrapper-inner {
+    height: 100%;
+    background-color: #424f5a;
+    color: #fbfbfb;
+}
+/* SVG icons for buttons (include margin for aligning to text) */
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: -5px;
+}
+
+#annotations-edit .fa.fa-comment {
+    width: 20px;
+    height: 20px;
+    margin-bottom: -3px;
+}
+
+.off-canvas-content {
+    height: 100%;
+}
+
+.off-canvas {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    overflow-y:hidden;
+}
+
+.off-canvas .tabs-content {
+    height: 100%;
+    flex: 1;
+}
+/* slippy map widget */
+
+.map {
+    width: 100%;
+    height: 100%;
+    min-height: 20px;
+    flex: 1;
+    background: url('../images/bg.png') repeat;
+    background-position: center;
+    position: relative;
+    outline: 0;
+    /* disable history gestures on IE */
+    -ms-scroll-chaining: none;
+}
+
+/* position fixes for top-right OpenLayers map widgets */
+
+.ol-scale-line {
+    top: 128px;
+    left: auto;
+    right: 72px;
+    bottom: auto;
+    border: 1px solid transparent;
+}
+
+.ol-full-screen {
+    top: 16px;
+    right: 16px;
+    padding: 0;
+}
+
+.ol-zoom {
+    top: 72px;
+    left: auto;
+    right: 16px;
+    bottom: auto;
+    padding: 0;
+}
+
+.ol-zoom button,
+.ol-full-screen button {
+    width: 48px;
+    height: 48px;
+    margin: 0;
+}
+
+.ol-zoom button {
+    margin-bottom: 1px;
+}
+
+#menu-scale {
+    position: absolute;
+    top: 72px;
+    right: 72px;
+    width: 96px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border: 0;
+    color: white;
+    height: 48px;
+}
+
+#map-search {
+    position: absolute;
+    top: 16px;
+    right: 104px;
+    width: 192px;
+    height: 48px;
+    font-size: 0.8rem;
+    border: 0;
+    padding: 8px;
+    color: white;
+}
+
+#map-search-button {
+    position: absolute;
+    top: 16px;
+    color: white;
+    width: 32px;
+    right: 72px;
+    height: 48px;
+}
+
+#map-search.noFullScreen {
+    right: 48px;
+}
+
+#map-search-button.noFullScreen {
+    right: 16px;
+}
+
+.tooltip-measure {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+.tooltip-measuring {
+    opacity: 1;
+    font-weight: bold;
+}
+.tooltip-measured {
+    background-color: #ffcc33;
+    color: black;
+    border: 1px solid white;
+}
+.tooltip-measuring:before,
+.tooltip-measured:before {
+    border-top: 6px solid rgba(0, 0, 0, 0.5);
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    margin-left: -7px;
+    left: 50%;
+}
+.tooltip-measured:before {
+    border-top-color: #ffcc33;
+} 
+
+.ol-mouse-position {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    top: auto;
+    right: auto;
+    text-align: left;
+    font-size: 0.8rem;
+    border: 0;
+    padding: 8px;
+    color: white;
+}
+
+/* for mobile screens, size the pane to fill the viewport */
+
+.off-canvas.position-left {
+    left: -100vw;
+    width: 100vw;
+}
+
+.position-left.reveal-responsive {
+    left: 0;
+    position: fixed;
+    z-index: 0;
+}
+
+.position-left.reveal-responsive ~ .off-canvas-content {
+    margin-left: 100vw;
+}
+
+#side-pane-close {
+    display: none;
+}
+
+.position-left.reveal-responsive #side-pane-close {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+/* for non-mobile screens, have a fixed 400px left pane */
+
+@media screen and (min-width: 40em) {
+    /* widen the off canvas area*/
+    .off-canvas.position-left {
+        left: -424px;
+        width: 424px;
+    }
+    .position-left.reveal-responsive {
+        left: 0;
+        position: fixed;
+        z-index: auto;
+    }
+    .position-left.reveal-responsive ~ .off-canvas-content {
+        margin-left: 424px;
+    }
+    #side-pane-close {
+        display: none;
+    }
+    .position-left.reveal-responsive #side-pane-close {
+        display: none;
+    }
+}
+/* raise our widgets above the slippy map */
+
+.map-widget {
+    position: absolute;
+    z-index: 1;
+}
+/* remove some of the annoying tab box styles */
+
+#offCanvasLeft {
+    opacity:1;
+    background-color: #424f5a;
+    z-index:100;
+}
+
+#offCanvasLeft .tabs-content {
+    background-color: transparent;
+    border: 0;
+}
+/* fix tool labels/padding */
+
+.tool-label,
+.off-canvas label.tool-label {
+    font-size: 80%;
+    float: left;
+}
+
+.tool-slice {
+    margin-bottom: 4px;
+}
+
+.tool-slice input,
+.tool-slice select,
+.tool-slice button,
+.tool-slice .input-group {
+    margin: 0px;
+}
+
+.tool-slice .button.selected {
+    border: 2px dotted #ffffff;
+}
+
+;
+.button-group input {
+    display: none;
+}
+
+.button-group input:checked + label,
+.button-group input:checked + label:active {
+    background-color: rgba(0, 60, 136, 0.7);
+}
+/* make range sliders visible */
+
+input[type="range"] {
+    background-color: transparent;
+}
+
+.tool-slice input[type="range"] {
+    width: 100%;
+}
+/* make tool button text bigger */
+
+.button-group.expanded .button-tool {
+    padding: 0.5em;
+    font-size: 18px;
+}
+
+#menu-tabs {
+    background-color: transparent;
+    border: 0;
+}
+
+#menu-pagesize {
+    font-weight: bold;
+}
+/* styling for tabs used in the side-pane */
+
+.off-canvas .tabs {
+    background-color: rgba(37, 45, 51, 0.9);
+    border: 0;
+}
+
+.off-canvas .tabs a {
+    color: white;
+    border: 1px solid transparent;
+    text-align: center;
+    padding: 16px 4px;
+}
+
+.off-canvas .tabs a:hover {
+    background-color: rgba(128, 128, 128, 0.23);
+}
+
+.off-canvas .tabs a:focus {
+    background-color: transparent;
+}
+
+.off-canvas .tabs a[aria-selected="true"] {
+    background-color: rgba(128, 128, 128, 0.46);
+    border: 1px solid rgba(37, 45, 51, 0.9);
+}
+/* rig the tabs to use flexbox for full-width */
+
+.off-canvas .tabs {
+    display: flex;
+    width: 100%;
+}
+
+.off-canvas .tabs .tabs-title {
+    flex: 1 1 0px;
+}
+
+.off-canvas .tabs a {
+    height: 100%;
+}
+
+.off-canvas .tabs a .label{
+    cursor:initial;
+}
+
+/* styling for switch widgets used in the side pane */
+
+.off-canvas .switch-paddle {
+    background: rgba(37, 45, 51, 0.9);
+}
+
+.off-canvas .switch-input,
+.off-canvas .switch {
+    margin: 0;
+}
+
+.off-canvas label {
+    color: white;
+    line-height: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.side-label {
+    margin-left: 9px;
+}
+/* Set height of internal layers to allow for bottom details */
+
+.layers-flexibleframe {
+    /*border-bottom: 1px solid rgba(37, 45, 51, 0.9);*/
+}
+.scroller {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/* remove extra padding for tab boxes inside other tab boxes */
+
+#layers-list {
+    padding: 1rem 0 0 0;
+}
+
+/* remove button padding in feature rows */
+.feature-row .button, .layer-row .button {
+    margin: 0;
+}
+
+/* styling for movable row boxes */
+.layer-row,
+.feature-row {
+    color: white;
+    background-color: rgba(37, 45, 51, 0.5);
+    padding: 4px;
+}
+
+.layer-row:nth-child(even),
+.feature-row:nth-child(even) {
+    background-color: rgba(37, 45, 51, 0.3);
+}
+
+.feature-row .layer-title {
+    font-size: 120%;
+}
+
+.feature-row .layer-id {
+    font-style: italic;
+    font-size: 75%;
+}
+/* Add dotted line box to dragged layers*/
+
+.feature-row.gu-transit {
+    border: 2px dashed #ffffff;
+    border-radius: 4px;
+}
+/* Add status indicator to left hand side of layer rows */
+
+.status-row {
+    border-left: 4px solid transparent;
+    border-top: 2px solid transparent;
+    border-right: 0;
+    border-bottom: 2px solid transparent;
+}
+
+@keyframes layer-pulse {
+    0% {
+        border-left-color: #ffcf41;
+    }
+    50% {
+        border-left-color: #edb100;
+    }
+    100% {
+        border-left-color: #ffcf41;
+    }
+}
+
+.status-row.idle {
+    border-left-color: #71c837;
+}
+
+.status-row.loading {
+    animation-name: layer-pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+.status-row.error {
+    border-left-color: #ec5840;
+    border-style: double;
+}
+/* custom F6 tab style overrides for the side buttons  */
+
+.side-button > a {
+    background-color: rgba(37, 45, 51, 0.7);
+    border-left: 3px solid transparent;
+    padding: 1em;
+    font-size: 24px;
+    color: white;
+}
+
+.side-button .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.side-button > a:hover {
+    background-color: rgba(37, 45, 51, 0.9);
+}
+
+.side-button > a:focus {
+    background-color: rgba(37, 45, 51, 0.7);
+}
+
+.side-button > a[aria-selected="true"] {
+    background-color: rgba(37, 45, 51, 0.8);
+    border-left: 3px solid #2199e8;
+}
+/* fix absurdly large margins on button groups */
+
+.button-group {
+    margin-bottom: 1px;
+}
+/* colouring changes to OpenLayers widgets to match side buttons*/
+
+.ol-control,
+.ol-control:hover {
+    background-color: transparent;
+}
+
+.ol-control button,
+.ol-control button:focus,
+.ol-scale-line,
+.ol-mouse-position,
+.map-control {
+    background-color: rgba(37, 45, 51, 0.7);
+}
+
+.ol-control button:hover,
+.ol-scale-line:hover,
+.ol-mouse-position:hover,
+.map-control:hover {
+    background-color: rgba(37, 45, 51, 0.9);
+}
+
+.feature-row {
+    cursor: pointer;
+}
+    
+.feature-row:hover {
+    background-color: rgba(37, 45, 51, 0.9);
+}
+
+.feature-row:nth-child(even):hover {
+    background-color: rgba(37, 45, 51, 0.7);
+}
+    
+.feature-row.feature-selected {
+    background-color: #165016;
+}
+    
+.feature-row:nth-child(even).feature-selected {
+    background-color: #185a18;
+}
+
+input:disabled ~ .switch-paddle {
+     background-color: rgb(119, 119, 119);
+}
+
+.default-name {
+    color:#e2e3e5
+}
+
+.button.tiny{
+    line-height:1em;
+    margin-left:2px;
+}
+.right-bottom-icon {
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:32px;
+    height:32px;
+    cursor:pointer;
+}
+
+.button.small.icon2x {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 4.2px;
+    padding-bottom: 4.2px;
+}
+
+.datepicker table td .hour {
+    line-height:20px;
+    height:30px;
+}
+.datepicker table td .minute {
+    line-height:20px;
+    height:30px;
+    margin:0px 0px 0px 0px;
+    width:20%;
+}
+

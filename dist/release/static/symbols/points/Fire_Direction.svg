@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg3064"
+   height="64px"
+   width="64px"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Fire_Direction.svg">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="3.6875"
+     inkscape:cx="33.084746"
+     inkscape:cy="21.152542"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <metadata
+     id="metadata3069">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer2"
+     fill="#FFF">
+    <path
+       id="path3062-7"
+       d="m0.744,47.4,0-32.6,12.8,0,0,3.85-10.3,0,0,10.1,8.94,0,0,3.85-8.94,0,0,14.8z" />
+    <path
+       id="path3035-4"
+       d="m42.9,37.5,4.58-3.9-15.7-0.0424c-15-0.0403-15.7-0.154-15.7-2.3s0.779-2.26,15.7-2.31l15.7-0.0471-4.48-3.91-4.48-3.91h6.04c5.3,0,6.87,0.594,12.7,4.8,3.69,2.64,6.7,5.06,6.7,5.37-0.000626,0.311-2.89,2.73-6.42,5.37-5.79,4.34-7.04,4.8-12.8,4.79l-6.42-0.0168z" />
+  </g>
+  <g
+     id="layer1"
+     fill="#F00"
+     style="fill:#ff0000;fill-opacity:1">
+    <path
+       id="path3062"
+       d="m1.02,46.7,0-31.6,9.94,0,0,3.73-7.99,0,0,9.8,6.91,0,0,3.73-6.91,0,0,14.4z"
+       style="fill:#000000;fill-opacity:1" />
+    <path
+       id="path3035"
+       d="m44.3,37,3.95-3.47-13.6-0.0378c-12.9-0.036-13.6-0.137-13.6-2.05,0-1.92,0.671-2.02,13.6-2.06l13.6-0.042-3.86-3.49-3.86-3.49h5.21c4.57,0,5.93,0.53,11,4.28,3.18,2.36,5.78,4.51,5.78,4.79-0.000542,0.277-2.49,2.43-5.53,4.79-5,3.87-6.07,4.28-11.1,4.27l-5.54-0.015z"
+       style="fill:#000000;fill-opacity:1" />
+  </g>
+</svg>

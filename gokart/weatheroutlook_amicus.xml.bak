@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product version="1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.bom.gov.au/schema/v1.7/product.xsd">
+    <amoc>
+        <source>
+            <sender>Spatial Support System</sender>
+            <region>Western Australia</region>
+            <office>OIM</office>
+            <copyright></copyright>
+            <disclaimer></disclaimer>
+        </source>
+        <identifier></identifier>
+        <issue-time-utc>{{data.latest_refresh_time|formatDate("%Y-%m-%dT%H:%M:%SZ",timezone="UTC")}}</issue-time-utc>
+        <issue-time-local tz="WST"> {{data.latest_refresh_time|formatDate("%Y-%m-%dT%H:%M:%S%z")}}</issue-time-local>
+        <sent-time>{{data.issued_time|formatDate("%Y-%m-%dT%H:%M:%S%z")}}</sent-time>
+        <expiry-time>{{data.issued_time|addDate(hours=12)|formatDate("%Y-%m-%dT%H:%M:%S%z")}}</expiry-time>
+        <validity-bgn-time-local tz="WST">{{data.min_time|formatDate("%Y-%m-%dT%H:%M:%S%z")}}</validity-bgn-time-local>
+        <validity-end-time-local tz="WST">{{data.max_time|formatDate("%Y-%m-%dT%H:%M:%S%z")}}</validity-end-time-local>
+        <status>O</status>
+        <service>SSS</service>
+        <sub-service>WeatherOutlook</sub-service>
+        <product-type></product-type>
+        <phase></phase>
+    </amoc>
+    <forecast>
+        <area aac="WA_FA001" description="Western Australia" type="region">
+            <forecast-period start-time-local="{{data.min_time|formatDate('%Y-%m-%dT%H:%M:%S%z')}}" end-time-local="{{data.max_time|formatDate('%Y-%m-%dT%H:%M:%S%z')}}" start-time-utc="{{data.min_time|formatDate('%Y-%m-%dT%H:%M:%SZ',timezone='UTC')}}" end-time-utc="{{data.min_time|formatDate('%Y-%m-%dT%H:%M:%S%Z',timezone='UTC')}}">
+                <element type="event_name"></element>
+                <element type="event_type"></element>
+                <element type="event_number"></element>
+                <element type="event_location">{{data.options.position}}</element>
+                <element type="request_number"></element>
+                <element type="event_latitude">{{data.options.latitude}}</element>
+                <element type="event_longitude">{{data.opitons.longitude}}</element>
+                <element type="request_fax_number"></element>
+                <element type="event_elevation"></element>
+                <element type="request_telephone_number"></element>
+                <element type="fire_event_fuel"></element>
+                <element type="request_officer_name">DBCA</element>
+                <element type="observation_location">{{data.options.position}}</element>
+                <element type="observation_time">{{data.latest_refresh_time|formatDate("%H:%M:%S")}}</element>
+                <element type="air_temperature"></element>
+                <element type="dewpoint_temperature"></element>
+                <element type="relative_humidity"></element>
+                <element type="wind_direction"></element>
+                <element type="wind_speed"></element>
+                <element type="wind_gust_speed"></element>
+                <element type="forecaster_comments"></element>
+                <element type="forecast_period"></element>
+                <element type="drought_factor"></element>
+                <element type="ground_moisture_curing_rate"></element>
+                <element type="fuel_loading"></element>
+                <text type="forecast"></text>
+            </forecast-period>
+    {%- for outlook in data.outlooks -%}
+        {%- for day in outlook.days -%}
+          {%- set dayIndex = loop.index0 -%}
+          {%- for time in outlook.times[dayIndex] -%}
+            {%- set timeIndex = loop.index0 -%}
+            <forecast-period start-time-local="{{time|formatDate('%Y-%m-%dT%H:%M:%S%z')}}" end-time-local="{{time|addDate(hours=outlook.options.expired)|formatDate('%Y-%m-%dT%H:%M:%S%z')}" start-time-utc="{{time|formatDate('%Y-%m-%dT%H:%M:%SZ',timezone='UTC')}}" end-time-utc="{{time|addDate(hours=outlook.options.expired)|formatDate('%Y-%m-%dT%H:%M:%SZ',timezone='UTC')}">
+                <element type="time">{{time|formatDate('%H%M')}}</element>
+            {%- for datasource in outlook.times_data -%}
+                {%- if datasource.status -%}
+                <element type="{{datasource.options.title|safe}}">{{datasource.data[dayIndex][timeIndex][1]}}</element>
+                {% else %}
+                <element type="air_temperature">{{data.options.no_data}}</element>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            </forecast-period>
+          {% endfor %}
+        {% endfor %}
+    {% endfor %}
+        </area>
+        <area aac="WA_FA001" description="Western Australia" type="region" parent-aac="WA_EV002">
+            <forecast-period start-time-local="{{data.latest_refresh_time|formatDate('%Y-%m-%dT%H:%M:%S%z')}}" end-time-local="{{data.latest_refresh_time|formatDate('%Y-%m-%dT%H:%M:%S%z')}}" start-time-utc="{{data.latest_refresh_time|formatDate('%Y-%m-%dT%H:%M:%SZ',timezone='UTC')}}" end-time-utc="{{data.latest_refresh_time|formatDate('%Y-%m-%dT%H:%M:%SZ',timezone='UTC')}}">
+                <element type="forecaster_comments_header">Significant wind changes and uncertainties associated with the forecast</element>
+                <text type="explanatory_notes">##</text>
+            </forecast-period>
+        </area>
+    </forecast>
+</product>

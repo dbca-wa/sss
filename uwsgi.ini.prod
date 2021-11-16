@@ -1,0 +1,26 @@
+[uwsgi]
+socket          = :8080
+gevent          = 100
+max-requests    = 1000
+buffer-size     = 32768
+cache2          = name=default,bitmap=1,items=10000,blocksize=1000,blocks=200000
+vacuum          = true
+memory-report   = true
+disable-logging = true
+
+# Django-related settings
+chdir           = /app/
+module          = gokart
+
+# Process-related settings
+auto-procname   = true
+processes       = 16
+static-map      = /dist=%(chdir)dist/release
+static-map      = /static=%(chdir)gokart/static
+static-map      = /fetch=%(chdir)gokart/tmp
+static-safe     = %(chdir)/dist
+static-cache-paths = 30
+die-on-term     = true
+uid             = www-data
+gui             = www-data
+

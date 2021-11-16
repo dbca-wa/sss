@@ -1,0 +1,30 @@
+<html>
+<head>
+ <meta charset="UTF-8"> 
+ <script src="dist/static/js/gokart-client.js"></script>
+</head>
+<body>
+    <script language="javascript">
+        if (window.top !== window.self) {
+            var client = null
+            var options = null
+            var debug = false
+            window.addEventListener("message",function (event) {
+                var request = JSON.parse(event.data)
+                if (request.method === "create") {
+                    options = request.options
+                    debug = options.debug
+                    client = new GokartClient(options.app,options.module,options.debug)
+                    window.top.postMessage(JSON.stringify({requestId:request.method,data:{status:"OK",message:"Succeed"}}),options.origin)
+                } else if(request.method) {
+                    var data = request.data
+                    if (debug) console.log(Date() + " : call gokart method = " + request.method + ", data = " + JSON.stringify(data))
+                    client.call(request.method,data.options,data.module,request.ignoreIfNotOpen)
+                }
+            },false)
+        }
+
+    </script>
+</body>
+</html>
+

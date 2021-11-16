@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Cordova CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: filesystem: mediastream:;">
+    <!-- Unicode is great -->
+    <meta charset="utf-8" />
+    <title>Weather Outlook</title>
+    <!-- Disable awful IE compatibility mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Force fit-to-viewport sizing on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- favicon -->
+    <link rel="icon" href="dist/static/images/favicon.svg" sizes="any" type="image/svg+xml" />
+    <link rel="icon" href="dist/static/images/favicon-256.png" sizes="16x16 32x32 64x64 128x128 256x256" type="image/png" /> 
+
+    <script src="{{staticService}}/static/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{staticService}}/static/libs/foundation/6.4.3/js/foundation.min.js"></script>
+    <script src="{{staticService}}/static/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="{{staticService}}/static/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="{{staticService}}/static/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="{{staticService}}/static/libs/filesaverjs/v0.2.2/FileSaver.min.js"></script>
+    <script src="{{staticService}}/static/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="{{staticService}}/static/libs/moment-timezone/0.5.13/moment-timezone.js"></script>
+    <script src="/dist/static/js/export.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{staticService}}/static/libs/foundation/6.4.3/css/foundation.min.css" />
+    <style>
+        .hover tbody tr:hover td, .table-hover tbody tr:hover th {
+          background-color: #2199e8;
+        }
+
+        #weatheroutlook .daterow {
+            background-color:#D2EEFA;
+        }
+
+        #weatheroutlook .time-0-in-day {
+            background-color:#white;
+        }
+        #weatheroutlook .time-1-in-day {
+            background-color:#D6E2E4;
+        }
+        #weatheroutlook th,#weatheroutlook td {
+            border:2px solid black
+        }
+        .outlook-title {
+            font-weight:bold;
+            font-size:1.5rem;
+        }
+        .outlooks-print table thead {
+            font-size:0.6rem;
+            font-weight:bold;
+        }
+        .outlooks-print table tbody {
+            font-size:0.6rem;
+        }
+        .outlooks-print .outlook-title {
+            font-weight:bold;
+            font-size:1.0rem;
+        }
+    </style>
+  </head>
+  <body>
+  {%- if envType != "prod" -%}
+  <body style="background-image:url('/dist/static/images/for-testing.png')">
+    <div style="opacity:0.75;letter-spacing:2px;padding-left:20px;padding-right:20px;padding-top:20px;padding-bottom:20px;z-index:100" id="outlooks">
+  {% else %}
+  <body>
+    <div style="letter-spacing:2px;padding-left:20px;padding-right:20px;padding-top:20px;padding-bottom:20px;z-index:100;" id="outlooks">
+  {% endif %}
+
+    <div><h5 class="outlook-title">{{data.options.title}}</h5></div>
+
+    <div style="font-size:small;font-weight:bold;font-style:italic">Issued at {{data.issued_time|formatDate("%I:%M %p %Z on %A %d %B %Y")}}(Fetched from BoM:{{data.latest_refresh_time|formatDate("%d/%m/%Y %H:%M")}})</div>
+    <div style="text-align:left;" class="bypass">
+        <img style="cursor:pointer" src="/dist/static/images/png.png" width="40px" height="40px" onclick="exportAs('outlooks','.bypass','outlook_{{data.issued_time|formatDate("%Y-%m-%d %H%M%S")}}.png')">
+        <img style="cursor:pointer;" src="/dist/static/images/pdf.png" width="40px" height="40px" onclick="exportAs('outlooks','.bypass','outlook_{{data.issued_time|formatDate("%Y-%m-%d %H%M%S")}}.pdf')">
+    </div>
+    {%- for outlook in data.outlooks -%}
+    {%- if loop.index0 != 0 -%}
+    <br><br>
+    {% endif %}
+    <table class="hover" align="center" id="weatheroutlook" >
+      <thead>
+        <tr>
+        {%- if outlook.has_group  -%}
+          <th rowspan="2" style="text-align:center">Time</th>
+        {% else %}
+          <th style="text-align:center"> Time </th>
+        {% endif %}
+        {%- for datasource in outlook.times_data -%}
+          {%- if datasource.group -%}
+          <th colspan="{{datasource.columns}}" style="text-align:center"> {{ datasource.group|safe }} </th>
+          {% else %}
+            {%- if outlook.has_group  -%}
+              <th rowspan="2" style="text-align:center"> {{ datasource.options.title|safe }}</th>
+            {% else %}
+              <th style="text-align:center"> {{ datasource.options.title|safe }}</th>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </tr>
+        {%- if outlook.has_group  -%}
+        <tr>
+          {%- for datasource in outlook.times_data -%}
+            {%- if datasource.group -%}
+              {%- for ds in datasource.datasources -%}
+                <th style="text-align:center"> {{ ds.options.title|safe }}</th>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </tr>
+        {% endif %}
+
+      </thead>
+      <tbody>
+        {%- set rowIndex = initValue() -%}
+        {{ setValue(rowIndex,0) }}
+        {%- for day in outlook.days -%}
+          {%- set dayIndex = loop.index0 -%}
+          {%- if outlook.has_daily_group -%}
+            <tr class="daterow">
+                <td colspan="{{outlook.columns}}" style="{{outlook.options.date_style|format("","text-align:left")}}">{{outlook["daily_group"][dayIndex]}}</td>
+            </tr>
+            {{ setValue(rowIndex,0) }}
+          {% endif %}
+          {%- for time in outlook.times[dayIndex] -%}
+            {{ setValue(rowIndex,(getValue(rowIndex) + 1) % 2) }}
+            {%- set timeIndex = loop.index0 -%}
+            <tr class="time-{{getValue(rowIndex)}}-in-day">
+              <td style="{{outlook.options.time_style|format("","text-align:center")}}">{{time}}</td>
+            {%- for datasource in outlook.times_data -%}
+              {%- if datasource.group -%}
+                {%- for ds in datasource.datasources -%}
+                  {%- if ds.status -%}
+              <td style="{{ds.style|format("","text-align:center")}}"> {{ ds.data[dayIndex][timeIndex][1]}}</td>
+                  {% else %}
+              <td style="{{ds.style|format("","text-align:center")}}">{{data.options.no_data}}</td>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {%- if datasource.status -%}
+              <td style="{{datasource.style|format("","text-align:center")}}"> {{ datasource.data[dayIndex][timeIndex][1]}}</td>
+                {% else %}
+              <td style="{{datasource.style|format("","text-align:center")}}">{{data.options.no_data}}</td>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endfor %}
+    </div>
+  </body>
+</html>

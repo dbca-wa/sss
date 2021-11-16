@@ -1,0 +1,31 @@
+.DS_Store
+node_modules
+dist/dev
+dist/www/dist
+dist/www/gokart.html
+dist/platforms
+dist/release/static/js/local.env.js
+gokart/static
+gokart/tmp
+src/apps/*-profile.js
+.env
+uwsgi.ini
+
+#ignore env file in ftp_sync folder
+ftp_sync/.*
+
+*.log
+*.sw*
+*.pyc
+.env
+.env*
+.build_cordova.sh
+build_cordova.env
+venv/
+tmp/
+
+# Database/fixture dumps
+*.pgdump
+*.dump
+*.db
+*.sqlite3

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Cordova CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: filesystem: mediastream:;">
+    <!-- Unicode is great -->
+    <meta charset="utf-8" />
+    <title>Incident Weather Forecast</title>
+    <!-- Disable awful IE compatibility mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Force fit-to-viewport sizing on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- favicon -->
+
+    <style>
+        #request_data_toggle {
+            width:16px;
+            height:16px;
+            z-index:99999;
+            position:absolute;
+            right:20px;
+            top:3px;
+            cursor:pointer;
+        }
+        #request_data {
+            z-index:99998;
+            position:absolute;
+            right:13px;
+            padding-right:40px;
+            top:0px;
+        }
+        #request_data th {
+            text-align:left;
+            font-weight:bold;
+            color:#2199e8;
+        }
+        #request_data td {
+            text-align:left;
+            color:#2199e8;
+            font-weight:bold;
+            margin-right:20px;
+        }
+        #forecast_form {
+            position:absolute;
+            left:0px;
+            top:0px;
+            border-style:none;
+            width:100%;
+        }
+    </style>
+    <script type="text/javascript">
+        function setHeight() {
+            document.getElementById("forecast_form").style.height = window.innerHeight + "px";
+        }
+        window.onresize = function() {
+            setHeight()
+        }
+        var showRequestData = true
+        function toggleRequestData() {
+            var toggle = document.getElementById("request_data_toggle")
+            var requestData = document.getElementById("request_data")
+            showRequestData = !showRequestData
+            if (showRequestData) {
+                toggle.src = "/dist/static/images/hide.svg"
+                requestData.style.display= ""
+            } else {
+                toggle.src = "/dist/static/images/show.svg"
+                requestData.style.display= "none"
+            }
+
+        }
+
+        function copy(elementId){
+            try{
+                var element = document.getElementById(elementId)
+                element.type="text"
+                element.select()
+                document.execCommand("copy")
+                if ('selectionStart' in element) {
+                    element.selectionEnd = element.selectionStart
+                }
+            } catch (ex) {
+                alert(ex)
+            } finally {
+                element.type="hidden"
+            }
+        }
+    </script>
+  </head>
+  {%- if envType != "prod" -%}
+  <body style="background-image:url('/dist/static/images/weatherforecast-for-testing.png')" onload="setHeight()">
+    <div id="forecast">
+  {% else %}
+  <body onload="setHeight()">
+    <div id="forecast">
+  {% endif %}
+        <img id="request_data_toggle" src="/dist/static/images/hide.svg" onclick="toggleRequestData()">
+        <table id="request_data" style="background-color:#036">
+            <tr> 
+                <th >Position:</th>
+                <td colspan="3">
+                    {{position}} 
+<<<<<<< HEAD
+                    {# %- if False -% #}
+                    <input type="hidden" id="position" name="position" value="{{position}}" >
+                    <button onclick="copy('position')" style="padding:0px">COPY</button></td>
+=======
+                    {#%- if False -% #}
+                    <input type="hidden" id="position" name="position" value="{{position}}" >
+                    <button  onclick="copy('position')" style="padding:0px">COPY</button></td>
+>>>>>>> 195e6e0c6c2fa030a8723ac325f57c950b1c8a7b
+                    {# % endif% #}
+            </tr>
+            <tr> 
+                <th >Latitude:</th>
+                <td colspan="3">
+                    {{point[1] | round(6)}}
+                    {# %- if False -% #}
+                    <input type="hidden" id="latitude" name="latitude" value="{{point[1] | round(6)}}" >
+                    <button onclick="copy('latitude')" style="padding:0px">COPY</button></td>
+                    {# % endif% #}
+            </tr>
+            <tr> 
+                <th >Longitude:</th>
+                <td colspan="3">
+                    {{point[0] | round(6)}} 
+                    {# %- if False -% #}
+                    <input type="hidden" id="longitude" name="longitude" value="{{point[0] | round(6)}}" >
+                    <button onclick="copy('longitude')" style="padding:0px">COPY</button></td>
+                    {# % endif% #}
+            </tr>
+            <tr> 
+                <th >Username:</th>
+                <td ><input type="hidden" id="user" name="user" value="{{weatherforecast_user}}"> <button onclick="copy('user',true)" style="padding:0px">COPY</button></td>
+                <th style="text-align:right">Password:</th>
+                <td ><input type="hidden" id="password" name="password" value="{{weatherforecast_password}}"> <button onclick="copy('password',true)" style="padding:0px">COPY</button></td>
+            </tr>
+        </table>
+        <iframe src="{{weatherforecast_url}}" id="forecast_form"></iframe>
+    </div>
+  </body>
+</html>

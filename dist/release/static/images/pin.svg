@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.809999"
+   height="20.73"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="pin.svg">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>orange pin</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1167"
+     id="namedview18"
+     showgrid="false"
+     showguides="false"
+     inkscape:zoom="3.72"
+     inkscape:cx="-124.03592"
+     inkscape:cy="76.02153"
+     inkscape:window-x="3840"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <title
+     id="title4">orange pin</title>
+  <defs
+     id="defs6">
+    <filter
+       x="-0.5"
+       y="-0.5"
+       height="2"
+       width="2"
+       id="svg_3_blur">
+      <feGaussianBlur
+         stdDeviation="7.7"
+         id="feGaussianBlur9" />
+    </filter>
+  </defs>
+  <g
+     id="g11"
+     transform="matrix(0.01269083,0,0,0.01247912,-2.1357357,-1.5897802)">
+    <title
+       id="title13">Layer 1</title>
+    <path
+       d="M 730.94,1840.63 C 692.17401,1650.33 623.82397,1491.96 541.03699,1345.1899 479.63001,1236.3199 408.49301,1135.83 342.673,1030.25 320.70099,995.00702 301.73901,957.77399 280.62601,921.19702 238.41,848.06 204.18201,763.26202 206.357,653.26501 208.482,545.79199 239.565,459.58099 284.38699,389.09299 358.10599,273.15799 481.58801,178.104 647.271,153.12399 782.737,132.7 909.74597,167.20599 999.81403,219.87199 1073.41,262.91 1130.41,320.39899 1173.73,388.15201 c 45.22,70.716 76.36,154.25998 78.97,263.23196 1.34,55.83002 -7.8,107.53204 -20.68,150.41803 -13.03,43.409 -33.99,79.69501 -52.64,118.45398 -36.41,75.659 -82.05,144.98402 -127.86,214.34402 -136.43699,206.61 -264.49601,417.31 -320.58,706.03 z"
+       stroke-miterlimit="10"
+       id="svg_2"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#a30101;fill-rule:evenodd;stroke-width:31;stroke-miterlimit:10" />
+    <path
+       d="m 731.37903,1838.9554 c 131.60394,-120.87 211.31396,-235.9799 269.14097,-350.4899 42.89,-84.9501 70.5401,-169.1701 106.95,-254.0601 12.16,-28.34 28.51,-56.57 42.52,-85.2999 28.02,-57.4501 72.66,-118.14 169.03,-178.10007 94.1601,-58.58996 193.95,-93.75598 291.58,-114.69696 160.56,-34.44202 344.28,-37.29901 502.5899,15.59302 129.45,43.24396 204.6802,113.46393 233.7801,178.86391 23.78,53.44 21.4299,108.18 -1.0401,163.1 -23.4599,57.32 -69.5698,116.07 -161.1098,177.39 -46.9002,31.42 -98.9002,56.3401 -146.4101,74.87 -48.0901,18.76 -96.5999,30.39 -145.33,44.32 -95.12,27.19 -192.42,47.1501 -289.8901,67.08 -290.3199,59.34 -577.25,124.3201 -871.81087,261.43 z"
+       id="svg_3"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;opacity:0.25;fill:#000000;fill-rule:evenodd;filter:url(#svg_3_blur)" />
+    <circle
+       r="183.33299"
+       cy="651.047"
+       cx="729.54602"
+       id="svg_4"
+       style="clip-rule:evenodd;fill:#ffffff;fill-rule:evenodd" />
+  </g>
+</svg>

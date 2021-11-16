@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Cordova CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: filesystem: mediastream:;">
+    <!-- Unicode is great -->
+    <meta charset="utf-8" />
+    <title>gokart - Loading</title>
+    <!-- Disable awful IE compatibility mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Force fit-to-viewport sizing on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- favicon -->
+    <link rel="icon" href="dist/static/images/favicon.svg" sizes="any" type="image/svg+xml" />
+    <link rel="icon" href="dist/static/images/favicon-256.png" sizes="16x16 32x32 64x64 128x128 256x256" type="image/png" /> 
+    <!-- manually packaged copy of Font Awesome (for mobile) -->
+    <link rel="stylesheet" type="text/css" href="dist/static/css/font-awesome/css/font-awesome.css" />
+  </head>
+  <body>
+    <script type="text/javascript">
+        var _env = {
+            {%- if weatherforecast_url -%} 
+            "weatherForecastUrl":"{{weatherforecast_url}}",
+            {% endif %}
+        }
+    </script>
+    <!-- main global styles down here to load after all packaged styles -->
+    <link rel="stylesheet" property="stylesheet" type="text/css" href="dist/static/css/style.css?version={{profile["dependents"]["styleMD5"]}}" />
+    <app v-ref:app></app>
+    <script src="dist/static/js/{{ envType }}.env.js?version={{profile["dependents"]["envMD5"]}}"></script>
+    <script src="dist/vendor.js?version={{profile["dependents"]["vendorMD5"]}}"></script>
+    <script src="dist/sss.js?version={{profile["build"]["md5"]}}"></script>
+  </body>
+</html>

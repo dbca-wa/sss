@@ -1,0 +1,18 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.dpaw.sss"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.dpaw.sss"
+        }
+    },
+    "dependent_plugins": {}
+}
